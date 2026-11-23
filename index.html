@@ -153,11 +153,81 @@ a{color:var(--olive-deep)}a:hover{color:var(--olive-light)}
   .cepas,.catalogo{padding:56px 0}
   .tile{min-width:0;width:100%}
 }
+@page{size:A4;margin:10mm 0}
+@page:first{margin:0 0 10mm}
 @media print{
-  .no-print{display:none!important}
-  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .card,.cepa{break-inside:avoid}
+  .no-print,.nav{display:none!important}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}
+  .wrap{max-width:none;padding:0 14mm}
+  .header .wrap{padding-top:5mm;padding-bottom:5mm}
+  .card,.cepa,.tile{break-inside:avoid}
   .card[hidden]{display:flex!important}
+  .card,.card:hover{transform:none;box-shadow:none}
+  /* En PDF no hay mezcla de colores: fotos sobre blanco */
+  .photo img,.hero-fig img{mix-blend-mode:normal}
+  .photo,.hero-fig{background:#fff}
+  /* Hoja 1: portada + cepas */
+  .strip{padding:6px 16px;font-size:9.5px}
+  .brand b{font-size:19px}
+  .hero .wrap{flex-wrap:nowrap;align-items:center;gap:9mm;padding-top:8mm;padding-bottom:9mm}
+  .hero-text{flex:1 1 56%;gap:12px}
+  .pill-dark{font-size:9.5px;padding:4px 10px}
+  .hero h1{font-size:31px}
+  .hero p{font-size:12.5px;line-height:1.55}
+  .hero-fig{flex:1 1 44%;padding:14px 12px 10px;gap:8px;border-radius:16px}
+  .hero-fig img{height:170px}
+  .hero-fig figcaption{padding-top:8px}
+  .hero-fig figcaption span{font-size:9.5px}
+  .cepas{padding:8mm 0 0}
+  .cepas .wrap{gap:14px}
+  .sec-head{gap:6px}
+  .cepas .h2{font-size:26px}
+  .sec-head p.lead{font-size:12.5px;line-height:1.5}
+  .cepa-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .cepa{padding:14px;gap:8px;box-shadow:none}
+  .cepa.featured{box-shadow:none}
+  .tag{font-size:8.5px;padding:3px 8px}
+  .origin{font-size:10.5px}
+  .cepa h3{font-size:20px}
+  .cepa p{font-size:11px;line-height:1.5}
+  .bars{gap:8px;padding-top:0}
+  .bar-row{font-size:10.5px;margin-bottom:4px}
+  .pairing{padding-top:10px}
+  .pairing b{font-size:9.5px}
+  .pairing span{font-size:10.5px;line-height:1.45}
+  /* Catálogo: empieza en hoja nueva, 2 filas de 3 por hoja */
+  .catalogo{break-before:page;background:#fff;padding:2mm 0 0}
+  .catalogo .wrap{gap:12px}
+  .cat-head .h2{font-size:26px}
+  .cat-head>div:first-child{gap:4px}
+  .count{display:none}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .photo{height:180px;padding:28px 8px 8px}
+  .photo img{height:144px}
+  /* Dos botellas: se recorta el borde blanco de cada foto en vez de superponerlas */
+  .photo.duo{gap:4px}
+  .photo.duo img{width:66px;max-width:none;object-fit:cover}
+  .photo.duo img+img{margin-left:0}
+  .fmt{top:8px;left:8px;font-size:9px;padding:3px 6px}
+  .card-body{padding:12px 13px;gap:6px}
+  .card-eyebrow{font-size:9px;letter-spacing:.1em}
+  .card h3{font-size:14.5px;line-height:1.28}
+  .profile{font-size:9.5px;padding:2px 8px}
+  .card-body>p{font-size:10.5px;line-height:1.45}
+  .card-foot{padding-top:2px}
+  .link-web{display:none}
+  .link-ask{min-height:26px;font-size:10.5px}
+  /* Contacto */
+  .contacto{break-inside:avoid;margin-top:8mm;padding:10mm 0 8mm}
+  .contacto .wrap{gap:12px}
+  .contacto h2{font-size:26px}
+  .contacto p{font-size:12.5px}
+  .tiles{flex-wrap:nowrap;gap:8px;padding-top:8px}
+  .tile{min-width:0;padding:10px 12px;gap:10px}
+  .tile i{width:32px;height:32px}
+  .tile small{font-size:8.5px}
+  .tile strong{font-size:12px}
+  .legal{margin-top:16px;padding-top:14px;font-size:10px}
 }
 </style>
 </head>
@@ -347,7 +417,7 @@ function esc(s) {
 function tarjeta(p) {
   const duo = p.fotos.length > 1;
   const fotos = p.fotos.map((f, i) =>
-    `<img src="img/${esc(f)}" alt="${esc(i === 0 ? p.nombre : p.nombre + ' (segunda botella)')}" loading="lazy" width="666" height="1000">`
+    `<img src="img/${esc(f)}" alt="${esc(i === 0 ? p.nombre : p.nombre + ' (segunda botella)')}" width="666" height="1000">`
   ).join('');
   const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Hola, quiero consultar por: ' + p.corto)}`;
   return `<article class="card" data-tipo="${esc(p.tipo)}">
