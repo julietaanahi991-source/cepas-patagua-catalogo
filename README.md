@@ -7,7 +7,8 @@ Es una sola página estática: `index.html` y las fotos en `img/`. No necesita i
 ## Qué incluye
 
 - Portada, perfil sensorial de las tres cepas y catálogo de 13 productos.
-- Filtros por formato: botellas 1 litro, bidones 5 litros, packs degustación 250 ml y packs ahorro 1 litro.
+- Filtros por formato: botellas 1 litro, bidones 5 litros, packs degustación 250 ml y packs 1 litro.
+- PDF para descargar o enviar: `catalogo-cepas-de-la-patagua.pdf` (A4, se genera imprimiendo `index.html`).
 - Botón «Consultar producto» que abre WhatsApp con el nombre del producto ya escrito.
 - Botón «PDF / Imprimir» (imprime todos los productos, sin filtros ni botones).
 - Sin precios: las consultas van por WhatsApp, correo o la tienda online.
